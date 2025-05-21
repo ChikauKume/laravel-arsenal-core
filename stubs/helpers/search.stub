@@ -1,0 +1,116 @@
+<?php
+
+namespace {{ namespace }};
+
+/**
+ * SearchHelperTrait
+ *
+ * A trait to add search capabilities to service classes
+ *
+ * @created {{ createdAt }}
+ */
+trait SearchHelperTrait
+{
+    /**
+     * Apply search parameters to the query builder.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param array $searchParams
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    protected function applySearch($query, array $searchParams)
+    {
+        if (empty($searchParams) || !$query) {
+            return $query;
+        }
+
+        foreach ($searchParams as $field => $value) {
+            // Skip empty values
+            if ($value === null || $value === '') {
+                continue;
+            }
+
+            // Handle special operators
+            if (is_array($value)) {
+                if (isset($value['operator']) && isset($value['value'])) {
+                    $operator = $value['operator'];
+                    $searchValue = $value['value'];
+
+                    switch ($operator) {
+                        case '=':
+                        case '!=':
+                        case '>':
+                        case '>=':
+                        case '<':
+                        case '<=':
+                            $query->where($field, $operator, $searchValue);
+                            break;
+                        case 'like':
+                            $query->where($field, 'like', "%{$searchValue}%");
+                            break;
+                        case 'in':
+                            if (is_array($searchValue) && !empty($searchValue)) {
+                                $query->whereIn($field, $searchValue);
+                            }
+                            break;
+                        case 'not_in':
+                            if (is_array($searchValue) && !empty($searchValue)) {
+                                $query->whereNotIn($field, $searchValue);
+                            }
+                            break;
+                        case 'between':
+                            if (is_array($searchValue) && count($searchValue) === 2) {
+                                $query->whereBetween($field, $searchValue);
+                            }
+                            break;
+                        case 'date_equals':
+                            $query->whereDate($field, '=', $searchValue);
+                            break;
+                        case 'date_gt':
+                            $query->whereDate($field, '>', $searchValue);
+                            break;
+                        case 'date_gte':
+                            $query->whereDate($field, '>=', $searchValue);
+                            break;
+                        case 'date_lt':
+                            $query->whereDate($field, '<', $searchValue);
+                            break;
+                        case 'date_lte':
+                            $query->whereDate($field, '<=', $searchValue);
+                            break;
+                    }
+                } elseif (!empty($value)) {
+                    // Assume it's a simple 'in' condition if an array without operators
+                    $query->whereIn($field, $value);
+                }
+            } else {
+                // Default to simple equality
+                $query->where($field, '=', $value);
+            }
+        }
+
+        return $query;
+    }
+
+    /**
+     * Apply sort parameters to the query builder.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param array $sortParams
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    protected function applySort($query, array $sortParams)
+    {
+        if (empty($sortParams) || !$query) {
+            return $query;
+        }
+
+        foreach ($sortParams as $field => $direction) {
+            if (in_array(strtolower($direction), ['asc', 'desc'])) {
+                $query->orderBy($field, $direction);
+            }
+        }
+
+        return $query;
+    }
+}

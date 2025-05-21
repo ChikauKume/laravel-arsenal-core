@@ -1,0 +1,48 @@
+{
+    "name": "lac/toolkit",
+    "description": "Laravel Arsenal Core (LAC) - A toolkit for standardizing and accelerating Laravel development with automated scaffolding, synchronization, and code generation tools",
+    "keywords": ["laravel", "arsenal", "toolkit", "ecosystem", "automation", "scaffolding", "code-generation", "synchronization", "development-acceleration", "standardization"],
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Lac\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Lac\\Tests\\": "tests/"
+        }
+    },
+    "authors": [
+        {
+            "name": "chikau",
+            "role": "Developer / Project Manager",
+            "email": "chikaukume@gmail.com"
+        }
+    ],
+    "require": {
+        "php": "^8.2",
+        "illuminate/support": "^10.0|^11.0|^12.0",
+        "phpoffice/phpspreadsheet": "^4.2"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^8.0|^9.0",
+        "phpunit/phpunit": "^10.0|^11.0"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Lac\\Providers\\LacServiceProvider"
+            ],
+            "aliases": {
+                "Lac": "Lac\\Facades\\Lac"
+            }
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "config": {
+        "sort-packages": true
+    }
+}

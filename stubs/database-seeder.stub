@@ -1,0 +1,27 @@
+<?php
+
+namespace Database\Seeders;
+
+use Illuminate\Database\Seeder;
+
+class DatabaseSeeder extends Seeder
+{
+    /**
+     * Seed the application's database.
+     *
+     * @return void
+     */
+    public function run()
+    {
+        // Call model seeders in logical order (respect dependencies)
+        $this->call([
+{{ seederCalls }}
+        ]);
+        
+        // Add custom seeders below or environment-specific seeders
+        if (app()->environment('local', 'development')) {
+            // Development environment seeders
+            // $this->call(DevTestDataSeeder::class);
+        }
+    }
+}
