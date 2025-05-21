@@ -45,7 +45,7 @@ Laravelのサービスプロバイダー自動検出機能により、LACは自�
 
 ## 使い方
 
-### スキャフォールディング
+### 1.スキャフォールディング
 
 1つのコマンドで完全なCRUDリソースを生成します：
 
@@ -60,12 +60,14 @@ php artisan lac:scaffold User Post Comment
 ```
 
 オプション：
-
 - `--hard-delete`: ソフトデリート機能を無効にする
 - `--force`: 既存のファイルを上書きする
 - `--no-view`: ビューファイルの生成をスキップする
 
-### ルート同期
+https://github.com/user-attachments/assets/21d4f6eb-2140-4bc0-8013-473a367243b9
+
+
+### 2.ルート同期
 
 コントローラーに基づいてルートを自動生成：
 
@@ -73,19 +75,14 @@ php artisan lac:scaffold User Post Comment
 php artisan lac:sync-routes
 ```
 
-APIルートのみ同期：
+オプション：
+- `--web`: Webルートのみ同期
+- `--api`: APIルートのみ同期
+  
+https://github.com/user-attachments/assets/2a9c4957-e9c6-4105-bd3c-7a331510ce9b
 
-```bash
-php artisan lac:sync-routes --api
-```
 
-Webルートのみ同期：
-
-```bash
-php artisan lac:sync-routes --web
-```
-
-### Excelテンプレート生成
+### 3.Excelテンプレート生成
 
 データベースのテーブル構造に基づいてExcelテンプレートを生成：
 
@@ -93,13 +90,10 @@ php artisan lac:sync-routes --web
 php artisan lac:db-template
 ```
 
-特定のテーブルのみ対象とする：
+https://github.com/user-attachments/assets/a0244e67-a281-4cd7-bbbf-a810e34f28c6
 
-```bash
-php artisan lac:db-template --table=users
-```
 
-### Excelからのデータインポート
+### 4.Excelからのデータインポート
 
 Excelファイルからデータベースにデータをインポート：
 データを入力したExcelファイルを`storage/app/db/imports`ディレクトリに配置してください
@@ -109,13 +103,10 @@ Excelファイルからデータベースにデータをインポート：
 php artisan lac:db-import
 ```
 
-特定のテーブルのみインポート：
+https://github.com/user-attachments/assets/7a47fd84-dc90-4478-83f7-fb4bcc0885a4
 
-```bash
-php artisan lac:db-import --table=users
-```
 
-### モデルリレーション同期
+### 5.モデルリレーション同期
 
 マイグレーションファイルに基づいてモデルのリレーションを自動生成：
 
@@ -129,7 +120,10 @@ php artisan lac:sync-model-rel
 php artisan lac:sync-model-rel User
 ```
 
-### バリデーション同期
+https://github.com/user-attachments/assets/6ff284dc-2fe4-4260-a9b7-4056007615b6
+
+
+### 6.バリデーション同期
 
 マイグレーションに基づいてリクエストクラスのバリデーションルールを生成：
 
@@ -140,8 +134,11 @@ php artisan lac:sync-validations
 特定のテーブルのみを対象とする：
 
 ```bash
-php artisan lac:sync-validations --tables=users,posts
+php artisan lac:sync-validations --tables=users
 ```
+
+https://github.com/user-attachments/assets/c7eebc48-0a6e-4f20-942e-3add216ee9d4
+
 
 ## アーキテクチャ設計
 
@@ -151,14 +148,7 @@ LACは以下の設計原則に従っています：
 - **リポジトリパターン**: データアクセスはモデルとコントローラーから分離
 - **スリムなコントローラー**: コントローラーはリクエスト検証とサービス呼び出しに専念 (ビジネスロジックはサービスファイルに集約)
 - **体系的なディレクトリ構造**: ファイルは一貫した構造で整理
-
-## 今後の予定
-
-今後追加予定の機能：
-
-- ERとマイグレーションファイルの自動同期
-- よく使用する機能のカタログ（CRUD、検索、認証など）
-- UI/UXコンポーネントのカタログ（ボタン、フォーム、モーダルなど）
+  
 
 *注意: 状況の変化に応じて変更される可能性があります。
 
@@ -168,8 +158,6 @@ MITライセンスの下で公開されています。詳細は[LICENSE](https:/
 
 ## 作成者
 
-- **Chikau Kume** - *開発者 / プロジェクトマネージャー* - [GitHub](https://github.com/ChikauKume)
-
-## 貢献
-
+- **[Chikau Kume](https://github.com/ChikauKume)**
+ 
 バグ報告、機能リクエスト、プルリクエストなどがございましたら是非共有お願いいたします。

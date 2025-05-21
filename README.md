@@ -6,12 +6,14 @@ Laravel Arsenal Core (LAC) is a toolkit for standardizing and accelerating Larav
 🇯🇵 [日本語](https://github.com/ChikauKume/laravel-arsenal-core/blob/main/README.ja.md)
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/lac/toolkit.svg)](https://packagist.org/packages/lac/toolkit)
-<!-- [![Total Downloads](https://img.shields.io/packagist/dt/lac/toolkit.svg)](https://packagist.org/packages/lac/toolkit) -->
 [![License](https://img.shields.io/packagist/l/lac/toolkit.svg?v=202405)](https://packagist.org/packages/lac/toolkit)
+<!-- [![Total Downloads](https://img.shields.io/packagist/dt/lac/toolkit.svg)](https://packagist.org/packages/lac/toolkit) -->
 
 ## Overview
 
 LAC is a comprehensive toolset that automates repetitive tasks in Laravel development and generates code that follows standardized patterns, resulting in maintainable systems.
+
+https://github.com/user-attachments/assets/95eb9908-66e9-4d59-b2fa-f3c7034cb9b4
 
 ## Features
 
