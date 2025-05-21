@@ -134,8 +134,11 @@ php artisan lac:sync-validations
 特定のテーブルのみを対象とする：
 
 ```bash
-php artisan lac:sync-validations --tables=users,posts
+php artisan lac:sync-validations --tables=users
 ```
+
+https://github.com/user-attachments/assets/c7eebc48-0a6e-4f20-942e-3add216ee9d4
+
 
 ## アーキテクチャ設計
 
