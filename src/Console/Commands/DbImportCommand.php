@@ -17,8 +17,7 @@ class DbImportCommand extends Command {
      *
      * @var string
      */
-    protected $signature = 'lac:db-import
-                            {--table= : Import only a specific table}';
+    protected $signature = 'lac:db-import {--table= : Specify the target table for import}';
 
     /**
      * The console command description.
@@ -271,9 +270,9 @@ class DbImportCommand extends Command {
             // IDを除外した上で足りないカラムをチェック
             $missingNonIdHeaders = array_diff($missingHeaders, ['id']);
             if (!empty($missingNonIdHeaders)) {
-                $this->warn("Some table columns are missing in the Excel file: " . implode(', ', $missingNonIdHeaders));
+                // $this->warn("Some table columns are missing in the Excel file: " . implode(', ', $missingNonIdHeaders));
             } else if (!empty($missingHeaders) && count($missingHeaders) === 1 && in_array('id', $missingHeaders)) {
-                $this->info("Only 'id' column is missing, which is expected for new records.");
+                // $this->info("Only 'id' column is missing, which is expected for new records.");
             }
             
             // Prepare for import
@@ -383,6 +382,15 @@ class DbImportCommand extends Command {
             DB::beginTransaction();
             try {
                 foreach ($rowsToProcess as $rowData) {
+                    // 現在日時を追加
+                    if (Schema::hasColumn($tableName, 'created_at') && !isset($rowData['created_at'])) {
+                        $rowData['created_at'] = now();
+                    }
+                    
+                    if (Schema::hasColumn($tableName, 'updated_at')) {
+                        $rowData['updated_at'] = now();
+                    }
+                    
                     switch ($strategy) {
                         case 'add':
                             // Simple insert
@@ -599,7 +607,8 @@ class DbImportCommand extends Command {
      * @return array
      */
     protected function getColumns(string $table): array {
-        $skipColumns = ['created_at', 'updated_at', 'deleted_at'];
+        // deleted_atのみをスキップ対象に変更
+        $skipColumns = ['deleted_at'];
         $columns = [];
 
         try {
@@ -616,7 +625,7 @@ class DbImportCommand extends Command {
 
         return $columns;
     }
-    
+        
     /**
      * Validate and convert cell value based on column type.
      *
