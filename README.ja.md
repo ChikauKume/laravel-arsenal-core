@@ -170,8 +170,6 @@ MITライセンスの下で公開されています。詳細は[LICENSE](https:/
 
 ## 作成者
 
-- **Chikau Kume** - *開発者 / プロジェクトマネージャー* - [GitHub](https://github.com/ChikauKume)
-
-## 貢献
-
+- **[Chikau Kume](https://github.com/ChikauKume)**
+ 
 バグ報告、機能リクエスト、プルリクエストなどがございましたら是非共有お願いいたします。
