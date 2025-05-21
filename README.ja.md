@@ -2,10 +2,6 @@
 
 LAC（Laravel Arsenal Core）は、自動スキャフォールディング、同期、コード生成ツールを使用してLaravel開発を標準化し加速させるためのツールキットです。
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/lac/toolkit.svg)](https://packagist.org/packages/lac/toolkit)
-[![Total Downloads](https://img.shields.io/packagist/dt/lac/toolkit.svg)](https://packagist.org/packages/lac/toolkit)
-[![License](https://img.shields.io/packagist/l/lac/toolkit.svg)](https://packagist.org/packages/lac/toolkit)
-
 ## 概要
 
 LACは、Laravel開発における繰り返し作業を自動化し、標準パターンに従ったコードを生成する包括的なツールセットです。これにより保守性の高いシステム開発が可能になります。
