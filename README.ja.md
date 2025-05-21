@@ -120,6 +120,9 @@ php artisan lac:sync-model-rel
 php artisan lac:sync-model-rel User
 ```
 
+https://github.com/user-attachments/assets/6ff284dc-2fe4-4260-a9b7-4056007615b6
+
+
 ### 6.バリデーション同期
 
 マイグレーションに基づいてリクエストクラスのバリデーションルールを生成：
