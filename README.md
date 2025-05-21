@@ -1,6 +1,6 @@
-# LAC (Laravel Arsenal Core)
+# Laravel Arsenal Core (LAC)
 
-LAC (Laravel Arsenal Core) is a toolkit for standardizing and accelerating Laravel development with automated scaffolding, synchronization, and code generation tools.
+Laravel Arsenal Core (LAC) is a toolkit for standardizing and accelerating Laravel development with automated scaffolding, synchronization, and code generation tools.
 
 🇺🇸 [English (current)](https://github.com/ChikauKume/laravel-arsenal-core/blob/main/README.md) | 
 🇯🇵 [日本語](https://github.com/ChikauKume/laravel-arsenal-core/blob/main/README.ja.md)
