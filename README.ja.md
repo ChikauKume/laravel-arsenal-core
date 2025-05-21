@@ -103,6 +103,9 @@ Excelファイルからデータベースにデータをインポート：
 php artisan lac:db-import
 ```
 
+https://github.com/user-attachments/assets/7a47fd84-dc90-4478-83f7-fb4bcc0885a4
+
+
 ### 5.モデルリレーション同期
 
 マイグレーションファイルに基づいてモデルのリレーションを自動生成：
