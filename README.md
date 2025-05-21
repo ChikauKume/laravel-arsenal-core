@@ -13,8 +13,6 @@ Laravel Arsenal Core (LAC) is a toolkit for standardizing and accelerating Larav
 
 LAC is a comprehensive toolset that automates repetitive tasks in Laravel development and generates code that follows standardized patterns, resulting in maintainable systems.
 
-https://github.com/user-attachments/assets/95eb9908-66e9-4d59-b2fa-f3c7034cb9b4
-
 ## Features
 
 - **Scaffolding**: Generate models, controllers, services, requests, views, factories, and seeders with a single command
@@ -54,7 +52,7 @@ LAC will be automatically registered through Laravel's service provider auto-dis
 
 ## Usage
 
-### Scaffolding
+### 1.Scaffolding
 
 Generate a complete CRUD resource with a single command:
 
@@ -74,7 +72,9 @@ Options:
 - `--force`: Overwrite existing files
 - `--no-view`: Skip generating view files
 
-### Route Synchronization
+https://github.com/user-attachments/assets/21d4f6eb-2140-4bc0-8013-473a367243b9
+
+### 2.Route Synchronization
 
 Automatically generate routes based on controllers:
 
@@ -82,19 +82,14 @@ Automatically generate routes based on controllers:
 php artisan lac:sync-routes
 ```
 
-Synchronize API routes only:
+Options:
+- `--web`: Web routes only
+- `--api`: API routes only
 
-```bash
-php artisan lac:sync-routes --api
-```
+https://github.com/user-attachments/assets/2a9c4957-e9c6-4105-bd3c-7a331510ce9b
 
-Synchronize web routes only:
 
-```bash
-php artisan lac:sync-routes --web
-```
-
-### Excel Template Generation
+### 3.Excel Template Generation
 
 Generate Excel templates based on database table structure:
 
@@ -102,13 +97,10 @@ Generate Excel templates based on database table structure:
 php artisan lac:db-template
 ```
 
-Target specific tables only:
+https://github.com/user-attachments/assets/a0244e67-a281-4cd7-bbbf-a810e34f28c6
 
-```bash
-php artisan lac:db-template --table=users
-```
 
-### Data Import from Excel
+### 4.Data Import from Excel
 
 Import data from Excel files into the database:
 Place Excel files with your data in storage/app/db/imports directory
@@ -118,13 +110,9 @@ Processed Excel files are automatically moved to storage/app/db/processed direct
 php artisan lac:db-import
 ```
 
-Import specific tables only:
+https://github.com/user-attachments/assets/1a96d376-97df-42c5-8abe-474527b2a9d3
 
-```bash
-php artisan lac:db-import --table=users
-```
-
-### Model Relation Synchronization
+### 5.Model Relation Synchronization
 
 Automatically generate model relationships based on migration files:
 
@@ -137,8 +125,9 @@ Synchronize specific models only:
 ```bash
 php artisan lac:sync-model-rel User
 ```
+https://github.com/user-attachments/assets/6ff284dc-2fe4-4260-a9b7-4056007615b6
 
-### Validation Synchronization
+### 6.Validation Synchronization
 
 Generate validation rules for request classes based on database schema:
 
@@ -149,8 +138,10 @@ php artisan lac:sync-validations
 Target specific tables only:
 
 ```bash
-php artisan lac:sync-validations --tables=users,posts
+php artisan lac:sync-validations --tables=users
 ```
+
+https://github.com/user-attachments/assets/c7eebc48-0a6e-4f20-942e-3add216ee9d4
 
 ## Architecture Design
 
@@ -161,24 +152,11 @@ LAC follows these design principles:
 - **Slim Controllers**: Controllers focus on request validation and service calls
 - **Systematic Directory Structure**: Files are organized in a consistent structure
 
-## Roadmap
-
-Features planned for future releases:
-
-- Bidirectional auto-sync between ER diagram and migration files
-- Catalog of frequently used functionality (CRUD, search, authentication, etc.)
-- Catalog of UI/UX components (buttons, forms, modals, etc.)
-
-*Note: This roadmap represents our current plans but may change based on feedback, priorities, and changing circumstances.
-
 ## License
 
 Released under the MIT License. See the [LICENSE](https://github.com/ChikauKume/laravel-arsenal-core?tab=MIT-1-ov-file) file for details.
 
 ## Author
-
-- **Chikau Kume** - *Developer / Project Manager* - [GitHub](https://github.com/ChikauKume)
-
-## Contributing
+- [Chikau Kume](https://github.com/ChikauKume)
 
 Contributions are welcome, including bug reports, feature requests, and pull requests.
