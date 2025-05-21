@@ -59,14 +59,13 @@ php artisan lac:scaffold User
 php artisan lac:scaffold User Post Comment
 ```
 
-https://github.com/user-attachments/assets/21d4f6eb-2140-4bc0-8013-473a367243b9
-
-
 オプション：
-
 - `--hard-delete`: ソフトデリート機能を無効にする
 - `--force`: 既存のファイルを上書きする
 - `--no-view`: ビューファイルの生成をスキップする
+
+https://github.com/user-attachments/assets/21d4f6eb-2140-4bc0-8013-473a367243b9
+
 
 ### 2.ルート同期
 
@@ -76,18 +75,10 @@ https://github.com/user-attachments/assets/21d4f6eb-2140-4bc0-8013-473a367243b9
 php artisan lac:sync-routes
 ```
 
-APIルートのみ同期：
-
-```bash
-php artisan lac:sync-routes --api
-```
-
-Webルートのみ同期：
-
-```bash
-php artisan lac:sync-routes --web
-```
-
+オプション：
+- `--web`: Webルートのみ同期
+- `--api`: APIルートのみ同期
+  
 https://github.com/user-attachments/assets/2a9c4957-e9c6-4105-bd3c-7a331510ce9b
 
 
@@ -99,11 +90,8 @@ https://github.com/user-attachments/assets/2a9c4957-e9c6-4105-bd3c-7a331510ce9b
 php artisan lac:db-template
 ```
 
-特定のテーブルのみ対象とする：
+https://github.com/user-attachments/assets/a0244e67-a281-4cd7-bbbf-a810e34f28c6
 
-```bash
-php artisan lac:db-template --table=users
-```
 
 ### 4.Excelからのデータインポート
 
@@ -113,12 +101,6 @@ Excelファイルからデータベースにデータをインポート：
 
 ```bash
 php artisan lac:db-import
-```
-
-特定のテーブルのみインポート：
-
-```bash
-php artisan lac:db-import --table=users
 ```
 
 ### 5.モデルリレーション同期
