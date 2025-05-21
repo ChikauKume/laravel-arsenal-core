@@ -6,8 +6,6 @@ LAC（Laravel Arsenal Core）は、自動スキャフォールディング、同
 
 LACは、Laravel開発における繰り返し作業を自動化し、標準パターンに従ったコードを生成する包括的なツールセットです。これにより保守性の高いシステム開発が可能になります。
 
-https://github.com/user-attachments/assets/0d4b9d94-b7ad-4da2-b03e-58587b1e10e1
-
 ## 機能
 
 - **スキャフォールディング**: モデル、コントローラー、サービス、リクエスト、ビュー、ファクトリー、シーダーを単一のコマンドで生成
@@ -47,7 +45,7 @@ Laravelのサービスプロバイダー自動検出機能により、LACは自�
 
 ## 使い方
 
-### スキャフォールディング
+### 1.スキャフォールディング
 
 1つのコマンドで完全なCRUDリソースを生成します：
 
@@ -61,13 +59,16 @@ php artisan lac:scaffold User
 php artisan lac:scaffold User Post Comment
 ```
 
+https://github.com/user-attachments/assets/21d4f6eb-2140-4bc0-8013-473a367243b9
+
+
 オプション：
 
 - `--hard-delete`: ソフトデリート機能を無効にする
 - `--force`: 既存のファイルを上書きする
 - `--no-view`: ビューファイルの生成をスキップする
 
-### ルート同期
+### 2.ルート同期
 
 コントローラーに基づいてルートを自動生成：
 
@@ -87,7 +88,10 @@ Webルートのみ同期：
 php artisan lac:sync-routes --web
 ```
 
-### Excelテンプレート生成
+https://github.com/user-attachments/assets/2a9c4957-e9c6-4105-bd3c-7a331510ce9b
+
+
+### 3.Excelテンプレート生成
 
 データベースのテーブル構造に基づいてExcelテンプレートを生成：
 
@@ -101,7 +105,7 @@ php artisan lac:db-template
 php artisan lac:db-template --table=users
 ```
 
-### Excelからのデータインポート
+### 4.Excelからのデータインポート
 
 Excelファイルからデータベースにデータをインポート：
 データを入力したExcelファイルを`storage/app/db/imports`ディレクトリに配置してください
@@ -117,7 +121,7 @@ php artisan lac:db-import
 php artisan lac:db-import --table=users
 ```
 
-### モデルリレーション同期
+### 5.モデルリレーション同期
 
 マイグレーションファイルに基づいてモデルのリレーションを自動生成：
 
@@ -131,7 +135,7 @@ php artisan lac:sync-model-rel
 php artisan lac:sync-model-rel User
 ```
 
-### バリデーション同期
+### 6.バリデーション同期
 
 マイグレーションに基づいてリクエストクラスのバリデーションルールを生成：
 
