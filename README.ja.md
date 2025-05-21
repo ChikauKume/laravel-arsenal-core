@@ -103,8 +103,7 @@ Excelファイルからデータベースにデータをインポート：
 php artisan lac:db-import
 ```
 
-https://github.com/user-attachments/assets/7a47fd84-dc90-4478-83f7-fb4bcc0885a4
-
+https://github.com/user-attachments/assets/1a96d376-97df-42c5-8abe-474527b2a9d3
 
 ### 5.モデルリレーション同期
 
