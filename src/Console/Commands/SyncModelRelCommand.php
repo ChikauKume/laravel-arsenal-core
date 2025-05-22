@@ -244,6 +244,23 @@ class SyncModelRelCommand extends Command {
             return;
         }
 
+        // Skip system tables
+        $skipTables = [
+            'migrations', 
+            'password_resets', 
+            'password_reset_tokens',
+            'personal_access_tokens', 
+            'failed_jobs', 
+            'jobs', 
+            'cache', 
+            'sessions',
+            'job_batches'
+        ];
+        
+        if (in_array($tableName, $skipTables)) {
+            return;
+        }
+
         // Check if this might be a pivot table (has exactly two foreign keys)
         $foreignKeyCount = 0;
         $foreignTables = [];
@@ -334,6 +351,23 @@ class SyncModelRelCommand extends Command {
      * @return void
      */
     protected function extractForeignKeys($content, $tableName) {
+        // Skip system tables
+        $skipTables = [
+            'migrations', 
+            'password_resets', 
+            'password_reset_tokens',
+            'personal_access_tokens', 
+            'failed_jobs', 
+            'jobs', 
+            'cache', 
+            'sessions',
+            'job_batches'
+        ];
+        
+        if (in_array($tableName, $skipTables)) {
+            return;
+        }
+        
         // Skip if this is a pivot table
         if (isset($this->pivotTables[$tableName])) {
             return;
@@ -414,6 +448,28 @@ class SyncModelRelCommand extends Command {
     protected function addRelation($childTable, $parentTable, $foreignKey) {
         // Skip relations for pivot tables
         if (isset($this->pivotTables[$childTable])) {
+            return;
+        }
+        
+        // Skip self-referencing relations
+        if ($childTable === $parentTable) {
+            return;
+        }
+        
+        // Skip system tables
+        $skipTables = [
+            'migrations', 
+            'password_resets', 
+            'password_reset_tokens',
+            'personal_access_tokens', 
+            'failed_jobs', 
+            'jobs', 
+            'cache', 
+            'sessions',
+            'job_batches'
+        ];
+        
+        if (in_array($childTable, $skipTables) || in_array($parentTable, $skipTables)) {
             return;
         }
         
