@@ -88,7 +88,8 @@ class DbTemplateCommand extends Command {
         $this->importsDir = config('lac.db.imports_dir', $this->importsDir);
         
         // Load skip tables from config if available
-        $this->skipTables = config('lac.database.skip_tables', $this->skipTables);
+        $defaultSkipTables = array_merge($this->skipTables, ['job_batches']);
+        $this->skipTables = config('lac.database.skip_tables', $defaultSkipTables);
     }
 
     /**

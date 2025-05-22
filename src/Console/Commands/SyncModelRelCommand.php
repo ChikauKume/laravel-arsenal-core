@@ -188,11 +188,14 @@ class SyncModelRelCommand extends Command {
         try {
             $content = $this->files->get($filePath);
             
-            if (!preg_match('/namespace\s+App\\\\Models/i', $content)) {
+            // Check for namespace (App\Models or just App for User model)
+            if (!preg_match('/namespace\s+App(\\\\Models)?/i', $content)) {
                 return false;
             }
             
-            if (!preg_match('/class\s+' . preg_quote($expectedClassName) . '\s+extends\s+Model/i', $content)) {
+            // Check for class definition extending Model or Authenticatable
+            $classPattern = '/class\s+' . preg_quote($expectedClassName) . '\s+extends\s+(Model|Authenticatable)/i';
+            if (!preg_match($classPattern, $content)) {
                 return false;
             }
             
@@ -763,16 +766,19 @@ class SyncModelRelCommand extends Command {
         // Process relations
         foreach ($relations as $methodName => $methodCode) {
             if (isset($existingRelations[$methodName]) && $force) {
-                // Replace existing method
-                $pattern = '/\s*public\s+function\s+' . preg_quote($methodName) . '\s*\(\)\s*\{(?:[^{}]|(?R))*\}/s';
-                $content = preg_replace($pattern, "\n\n    " . $methodCode, $content);
+                // Replace existing method - find the complete method including docblock
+                $pattern = '/\s*\/\*\*(?:[^*]|\*(?!\/))*\*\/\s*public\s+function\s+' . preg_quote($methodName) . '\s*\(\)\s*\{[^{}]*(?:\{[^{}]*\}[^{}]*)*\}/s';
+                $content = preg_replace($pattern, "\n\n" . $methodCode, $content, 1);
             } 
             elseif (!isset($existingRelations[$methodName])) {
                 // Add new method
-                $content = substr_replace($content, "\n\n    " . $methodCode, $lastBracePos, 0);
-                $lastBracePos += strlen("\n\n    " . $methodCode);
+                $content = substr_replace($content, "\n\n" . $methodCode, $lastBracePos, 0);
+                $lastBracePos += strlen("\n\n" . $methodCode);
             }
         }
+        
+        // Remove duplicate empty docblocks
+        $content = preg_replace('/(\s*\/\*\*\s*\*[^*\/]*\*\/\s*){2,}/', '$1', $content);
         
         // Final brace check - ensure final brace is properly indented with no space
         $content = preg_replace('/\s*\}\s*$/', "\n}", $content);
@@ -796,61 +802,61 @@ class SyncModelRelCommand extends Command {
 
 
     /**
-     * Generate belongsTo relation method
-     *
-     * @param string $methodName
-     * @param string $relatedModel
-     * @param string $foreignKey
-     * @return string
-     */
-    protected function generateBelongsToMethod($methodName, $relatedModel, $foreignKey)  {
-        return "/**
-        * Relationship to {$relatedModel} model
-        *
-        * @return \\Illuminate\\Database\\Eloquent\\Relations\\BelongsTo
-        */
-        public function {$methodName}() {
-            return \$this->belongsTo(\\App\\Models\\{$relatedModel}::class, '{$foreignKey}');
-        }";
-    }
+    * Generate belongsTo relation method
+    *
+    * @param string $methodName
+    * @param string $relatedModel
+    * @param string $foreignKey
+    * @return string
+    */
+   protected function generateBelongsToMethod($methodName, $relatedModel, $foreignKey)  {
+       return "    /**
+    * Relationship to {$relatedModel} model
+    *
+    * @return \\Illuminate\\Database\\Eloquent\\Relations\\BelongsTo
+    */
+   public function {$methodName}() {
+       return \$this->belongsTo(\\App\\Models\\{$relatedModel}::class, '{$foreignKey}');
+   }";
+   }
 
-    /**
-     * Generate hasMany relation method
-     *
-     * @param string $methodName
-     * @param string $relatedModel
-     * @param string $foreignKey
-     * @return string
-     */
-    protected function generateHasManyMethod($methodName, $relatedModel, $foreignKey)  {
-        return "/**
-        * Relationship to {$relatedModel} collection
-        *
-        * @return \\Illuminate\\Database\\Eloquent\\Relations\\HasMany
-        */
-        public function {$methodName}() {
-            return \$this->hasMany(\\App\\Models\\{$relatedModel}::class, '{$foreignKey}');
-        }";
-    }
+   /**
+    * Generate hasMany relation method
+    *
+    * @param string $methodName
+    * @param string $relatedModel
+    * @param string $foreignKey
+    * @return string
+    */
+   protected function generateHasManyMethod($methodName, $relatedModel, $foreignKey)  {
+       return "    /**
+    * Relationship to {$relatedModel} collection
+    *
+    * @return \\Illuminate\\Database\\Eloquent\\Relations\\HasMany
+    */
+   public function {$methodName}() {
+       return \$this->hasMany(\\App\\Models\\{$relatedModel}::class, '{$foreignKey}');
+   }";
+   }
 
-    /**
-     * Generate belongsToMany relation method
-     *
-     * @param string $methodName
-     * @param string $relatedModel
-     * @param string $pivotTable
-     * @return string
-     */
-    protected function generateBelongsToManyMethod($methodName, $relatedModel, $pivotTable)  {
-        return "/**
-        * Many-to-many relationship to {$relatedModel} collection
-        *
-        * @return \\Illuminate\\Database\\Eloquent\\Relations\\BelongsToMany
-        */
-        public function {$methodName}() {
-            return \$this->belongsToMany(\\App\\Models\\{$relatedModel}::class, '{$pivotTable}');
-        }";
-    }
+   /**
+    * Generate belongsToMany relation method
+    *
+    * @param string $methodName
+    * @param string $relatedModel
+    * @param string $pivotTable
+    * @return string
+    */
+   protected function generateBelongsToManyMethod($methodName, $relatedModel, $pivotTable)  {
+       return "    /**
+    * Many-to-many relationship to {$relatedModel} collection
+    *
+    * @return \\Illuminate\\Database\\Eloquent\\Relations\\BelongsToMany
+    */
+   public function {$methodName}() {
+       return \$this->belongsToMany(\\App\\Models\\{$relatedModel}::class, '{$pivotTable}');
+   }";
+   }
 
     /**
      * Update models with the relations we found

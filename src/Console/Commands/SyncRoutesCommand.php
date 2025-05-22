@@ -147,7 +147,7 @@ class SyncRoutesCommand extends Command {
      * @return string
      */
     protected function getPackageStubPath(string $stubName): string {
-        return base_path('packages/lac/stubs/' . $stubName);
+        return base_path('vendor/lac/toolkit/stubs/' . $stubName);
     }
     
     /**
