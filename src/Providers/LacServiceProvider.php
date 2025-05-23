@@ -7,10 +7,10 @@ use Illuminate\Support\ServiceProvider;
 use Lac\Console\Commands\DbImportCommand;
 use Lac\Console\Commands\ScaffoldCommand;
 use Lac\Console\Commands\DbTemplateCommand;
-use Lac\Console\Commands\SyncFactoriesAndSeedersCommand;
-use Lac\Console\Commands\SyncModelRelCommand;
 use Lac\Console\Commands\SyncRoutesCommand;
+use Lac\Console\Commands\SyncModelRelCommand;
 use Lac\Console\Commands\SyncValidationsCommand;
+use Lac\Console\Commands\GenerateMigrationCommand;
 
 class LacServiceProvider extends ServiceProvider {
     /**
@@ -51,6 +51,7 @@ class LacServiceProvider extends ServiceProvider {
                 SyncModelRelCommand::class,
                 DbTemplateCommand::class,
                 DbImportCommand::class,
+                GenerateMigrationCommand::class
             ]);
         }
     }
