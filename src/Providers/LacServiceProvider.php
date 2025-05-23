@@ -9,6 +9,7 @@ use Lac\Console\Commands\ScaffoldCommand;
 use Lac\Console\Commands\DbTemplateCommand;
 use Lac\Console\Commands\SyncRoutesCommand;
 use Lac\Console\Commands\SyncModelRelCommand;
+use Lac\Console\Commands\GenerateDiagramCommand;
 use Lac\Console\Commands\SyncValidationsCommand;
 use Lac\Console\Commands\GenerateMigrationCommand;
 
@@ -51,7 +52,8 @@ class LacServiceProvider extends ServiceProvider {
                 SyncModelRelCommand::class,
                 DbTemplateCommand::class,
                 DbImportCommand::class,
-                GenerateMigrationCommand::class
+                GenerateMigrationCommand::class,
+                GenerateDiagramCommand::class,
             ]);
         }
     }
