@@ -189,6 +189,7 @@ Extract ER diagrams from your existing migration files for documentation:
 ```
 php artisan lac:gen-diagram
 ```
+The generated ER file will be stored into storage/app/db/diagrams/generated folder.
 
 https://github.com/user-attachments/assets/e0d9869c-aef8-48a1-afe6-f547caffe280
 
