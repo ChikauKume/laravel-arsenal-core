@@ -50,69 +50,102 @@ class GenerateMigrationCommand extends Command
        $this->diagramDir = $this->baseDir . '/diagrams';
    }
 
-   /**
-    * Execute the console command.
-    *
-    * @return int
-    */
-   public function handle(): int
-   {
-       // Ensure directories exist
-       $this->ensureDirectories();
-       
-       // Get PlantUML file
-       $file = $this->getPlantUmlFile();
-       
-       if (!$file) {
-           return Command::FAILURE;
-       }
-       
-       // Read PlantUML content
-       $content = File::get($file);
-       
-       // Parse PlantUML
-       $result = $this->parsePlantUml($content);
-       $tables = $result['tables'];
-       
-       if (empty($tables)) {
-           $this->error("No tables found in PlantUML file");
-           return Command::FAILURE;
-       }
-       
-       // Display tables to be generated
-       $this->displayTablesInfo($tables);
-       
-       // Check for existing tables
-       $existingTables = $this->checkExistingTables($tables);
-       
-       if (!empty($existingTables)) {
-           $this->warn("\nThe following migration files already exist:");
-           foreach ($existingTables as $table) {
-               $this->line(" - {$table}");
-           }
-           
-           if ($this->option('force') || $this->confirm('Do you want to drop and recreate these migration files?')) {
-               $this->dropExistingMigrations($existingTables);
-           } else {
-               $this->info("Operation cancelled.");
-               return Command::FAILURE;
-           }
-       }
-       
-       // Generate migrations
-       $this->info("\nGenerating migrations...");
-       foreach ($tables as $index => $table) {
-           if ($index > 0) {
-               sleep(1); // Ensure different timestamps
-           }
-           $this->generateMigration($table);
-       }
-       
-       $this->info("\nGenerated " . count($tables) . " migration files");
-       $this->info("Run 'php artisan migrate' to create the tables");
-       
-       return Command::SUCCESS;
-   }
+    /**
+     * Execute the console command.
+     *
+     * @return int
+     */
+    public function handle(): int
+    {
+        // Ensure directories exist
+        $this->ensureDirectories();
+        
+        // Get PlantUML file
+        $file = $this->getPlantUmlFile();
+        
+        if (!$file) {
+            return Command::FAILURE;
+        }
+        
+        // Read PlantUML content
+        $content = File::get($file);
+        
+        // Parse PlantUML
+        $result = $this->parsePlantUml($content);
+        $tables = $result['tables'];
+        
+        if (empty($tables)) {
+            $this->error("No tables found in PlantUML file");
+            return Command::FAILURE;
+        }
+        
+        // Display tables to be generated
+        $this->displayTablesInfo($tables);
+        
+        // Check for ANY existing migration files
+        $existingMigrations = $this->getAllExistingMigrations();
+        
+        if (!empty($existingMigrations)) {
+            $this->warn("\nFound " . count($existingMigrations) . " existing migration files.");
+            $this->line("To ensure bidirectional sync, all existing migrations will be removed.\n");
+            
+            if ($this->option('force') || $this->confirm('Do you want to delete ALL existing migration files and recreate from PlantUML?')) {
+                $this->deleteAllMigrations($existingMigrations);
+            } else {
+                $this->info("Operation cancelled.");
+                return Command::FAILURE;
+            }
+        }
+        
+        // Generate migrations
+        $this->info("\nGenerating migrations...");
+        foreach ($tables as $index => $table) {
+            $this->generateMigration($table);
+        }
+        $this->info("\nGenerated " . count($tables) . " migration files");
+        $this->info("Run 'php artisan migrate' to create the tables");
+        
+        return Command::SUCCESS;
+    }
+
+    /**
+     * Get all existing migration files
+     *
+     * @return array
+     */
+    protected function getAllExistingMigrations(): array
+    {
+        $migrationPath = database_path('migrations');
+        $files = File::glob($migrationPath . '/*.php');
+        
+        // Filter only create_*_table migrations
+        $migrations = [];
+        foreach ($files as $file) {
+            if (preg_match('/_create_\w+_table\.php$/', basename($file))) {
+                $migrations[] = $file;
+            }
+        }
+        
+        return $migrations;
+    }
+
+    /**
+     * Delete all migration files
+     *
+     * @param array $migrations
+     * @return void
+     */
+    protected function deleteAllMigrations(array $migrations): void
+    {
+        $this->info("Deleting all existing migration files...");
+        
+        foreach ($migrations as $migration) {
+            File::delete($migration);
+            $this->line(" - Deleted: " . basename($migration));
+        }
+        
+        $this->info("Deleted " . count($migrations) . " migration files.");
+    }
    
    /**
     * Get PlantUML file path
